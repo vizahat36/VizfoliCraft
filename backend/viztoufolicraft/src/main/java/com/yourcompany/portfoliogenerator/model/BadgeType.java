@@ -1,0 +1,14 @@
+package com.yourcompany.portfoliogenerator.model;
+
+public enum BadgeType {
+    PROFILE_COMPLETION,
+    PROJECT_SUBMISSION,
+    PORTFOLIO_CREATION,
+    RESUME_GENERATION,
+    TEMPLATE_USAGE,
+    GITHUB_INTEGRATION,
+    SOCIAL_SHARING,
+    SKILL_DEMONSTRATION,
+    TIME_BASED,
+    ACHIEVEMENT_UNLOCK
+}

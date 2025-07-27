@@ -1,26 +1,27 @@
 package com.yourcompany.portfoliogenerator.model;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "user_profiles")
+@Document(collection = "user_profiles")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserProfile {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false, unique = true)
+    @DBRef
     private User user;
     
     @Size(max = 100)
@@ -32,7 +33,6 @@ public class UserProfile {
     @Size(max = 200)
     private String location;
     
-    @Column(columnDefinition = "TEXT")
     private String bio;
     
     @Size(max = 200)
@@ -56,56 +56,43 @@ public class UserProfile {
     @Size(max = 200)
     private String twitterUrl;
     
-    @Column(columnDefinition = "TEXT")
     private String skills;
     
-    @Column(columnDefinition = "TEXT")
     private String experience;
     
-    @Column(columnDefinition = "TEXT")
     private String education;
     
-    @Column(columnDefinition = "TEXT")
     private String certifications;
     
-    @Column(name = "years_of_experience")
     private Integer yearsOfExperience;
     
-    @Column(name = "is_available_for_hire")
     private Boolean availableForHire = false;
     
-    @Column(name = "linkedin_synced")
     private Boolean linkedinSynced = false;
     
-    @Column(name = "github_synced")
     private Boolean githubSynced = false;
     
-    @Column(name = "last_linkedin_sync")
     private LocalDateTime lastLinkedinSync;
     
-    @Column(name = "last_github_sync")
     private LocalDateTime lastGithubSync;
     
-    @Column(name = "linkedin_synced_at")
     private LocalDateTime linkedinSyncedAt;
     
-    @Column(name = "github_synced_at")
     private LocalDateTime githubSyncedAt;
     
-    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
     
-    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
     
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
+    // Lifecycle methods for MongoDB
+    public void onCreate() {
+        if (createdAt == null) {
+            createdAt = LocalDateTime.now();
+        }
         updatedAt = LocalDateTime.now();
     }
     
-    @PreUpdate
-    protected void onUpdate() {
+    public void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
 }

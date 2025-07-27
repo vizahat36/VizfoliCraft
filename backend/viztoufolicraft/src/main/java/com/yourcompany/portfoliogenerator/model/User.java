@@ -1,10 +1,13 @@
 package com.yourcompany.portfoliogenerator.model;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.index.Indexed;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,30 +18,28 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
-@Entity
-@Table(name = "users")
+@Document(collection = "users")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class User implements UserDetails {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     
     @NotBlank
     @Size(min = 3, max = 50)
-    @Column(unique = true, nullable = false)
+    @Indexed(unique = true)
     private String username;
     
     @NotBlank
     @Email
-    @Column(unique = true, nullable = false)
+    @Indexed(unique = true)
     private String email;
     
     @NotBlank
     @Size(min = 6)
-    @Column(nullable = false)
     private String password;
     
     @NotBlank
@@ -49,31 +50,32 @@ public class User implements UserDetails {
     @Size(max = 100)
     private String lastName;
     
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private Role role = Role.USER;
     
-    @Column(nullable = false)
     private boolean enabled = true;
     
-    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
     
-    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
     
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
+    // Lifecycle methods for MongoDB
+    public void onCreate() {
+        if (createdAt == null) {
+            createdAt = LocalDateTime.now();
+        }
         updatedAt = LocalDateTime.now();
     }
     
-    @PreUpdate
-    protected void onUpdate() {
+    public void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
     
     // UserDetails implementation
+    @Override
+    public String getUsername() {
+        return username;
+    }
+    
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));

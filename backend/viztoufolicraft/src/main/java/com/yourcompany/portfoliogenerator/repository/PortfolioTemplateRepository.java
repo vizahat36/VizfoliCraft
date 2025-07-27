@@ -2,29 +2,38 @@ package com.yourcompany.portfoliogenerator.repository;
 
 import com.yourcompany.portfoliogenerator.model.PortfolioTemplate;
 import com.yourcompany.portfoliogenerator.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public interface PortfolioTemplateRepository extends JpaRepository<PortfolioTemplate, Long> {
+public interface PortfolioTemplateRepository extends MongoRepository<PortfolioTemplate, String> {
     
-    List<PortfolioTemplate> findByActiveTrue();
+    List<PortfolioTemplate> findByIsActiveTrueOrderByCreatedAtDesc();
     
-    List<PortfolioTemplate> findByActiveTrueAndFeaturedTrue();
+    List<PortfolioTemplate> findByCategoryAndIsActiveTrue(String category);
     
-    List<PortfolioTemplate> findByTemplateTypeAndActiveTrue(String templateType);
+    List<PortfolioTemplate> findByIsPremiumFalseAndIsActiveTrueOrderByCreatedAtDesc();
     
-    List<PortfolioTemplate> findByCreatedBy(User createdBy);
+    List<PortfolioTemplate> findByIsPremiumTrueAndIsActiveTrueOrderByCreatedAtDesc();
     
-    @Query("SELECT DISTINCT p.templateType FROM PortfolioTemplate p WHERE p.active = true")
-    List<String> findDistinctTemplateTypes();
+    Optional<PortfolioTemplate> findByIdAndIsActiveTrue(String id);
     
-    @Query("SELECT p FROM PortfolioTemplate p WHERE p.active = true AND " +
-           "(LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
-           "LOWER(p.description) LIKE LOWER(CONCAT('%', :keyword, '%')))")
-    List<PortfolioTemplate> searchByKeyword(@Param("keyword") String keyword);
+    @Query("{ 'isActive': true, '$or': [" +
+           "{ 'name': { $regex: ?0, $options: 'i' } }, " +
+           "{ 'description': { $regex: ?0, $options: 'i' } }" +
+           "] }")
+    List<PortfolioTemplate> searchTemplates(String keyword);
+    
+    @Query(value = "{ 'isActive': true }", count = true)
+    long countByIsActiveTrue();
+    
+    @Query("{ 'isActive': true }")
+    List<PortfolioTemplate> findMostUsedTemplates(int limit);
+    
+    @Query(value = "{ 'isActive': true }", fields = "{ 'category': 1 }")
+    List<String> findDistinctCategories();
 }

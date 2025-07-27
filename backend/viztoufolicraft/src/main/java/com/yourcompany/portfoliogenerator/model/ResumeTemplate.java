@@ -2,9 +2,7 @@ package com.yourcompany.portfoliogenerator.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import org.springframework.data.mongodb.core.index.Indexed;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,42 +10,32 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Document(collection = "portfolio_templates")
+@Document(collection = "resume_templates")
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PortfolioTemplate {
+@Builder
+public class ResumeTemplate {
     
     @Id
     private String id;
     
-    @NotBlank
-    @Size(max = 100)
+    @Indexed(unique = true)
     private String name;
     
-    @Size(max = 500)
     private String description;
     
-    @NotBlank
-    private String templateType; // e.g., "developer", "designer", "business", etc.
+    private TemplateType templateType;
     
-    private String htmlContent;
+    private String htmlTemplate;
     
-    private String cssContent;
+    private String cssStyles;
     
-    private String jsContent;
+    private Boolean isPremium = false;
     
-    private String jsonConfig; // Configuration for dynamic content
+    private Boolean isActive = true;
     
     private String previewImageUrl;
-    
-    private boolean active = true;
-    
-    private boolean featured = false;
-    
-    @DBRef
-    private User createdBy;
     
     private LocalDateTime createdAt;
     
@@ -63,5 +51,15 @@ public class PortfolioTemplate {
     
     public void onUpdate() {
         updatedAt = LocalDateTime.now();
+    }
+    
+    public enum TemplateType {
+        CLASSIC,
+        MODERN,
+        CREATIVE,
+        MINIMALIST,
+        EXECUTIVE,
+        TECHNICAL,
+        ACADEMIC
     }
 }
