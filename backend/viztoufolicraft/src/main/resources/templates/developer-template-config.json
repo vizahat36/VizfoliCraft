@@ -1,0 +1,99 @@
+{
+  "templateType": "developer",
+  "name": "Modern Developer Portfolio",
+  "description": "A clean and modern portfolio template for developers",
+  "fields": [
+    {
+      "key": "name",
+      "label": "Full Name",
+      "type": "text",
+      "required": true,
+      "placeholder": "John Doe"
+    },
+    {
+      "key": "title",
+      "label": "Professional Title",
+      "type": "text",
+      "required": true,
+      "placeholder": "Full Stack Developer"
+    },
+    {
+      "key": "about",
+      "label": "About Me",
+      "type": "textarea",
+      "required": true,
+      "placeholder": "Write a brief description about yourself..."
+    },
+    {
+      "key": "email",
+      "label": "Email Address",
+      "type": "email",
+      "required": true,
+      "placeholder": "john@example.com"
+    },
+    {
+      "key": "linkedin",
+      "label": "LinkedIn Profile",
+      "type": "url",
+      "required": false,
+      "placeholder": "https://linkedin.com/in/johndoe"
+    },
+    {
+      "key": "github",
+      "label": "GitHub Profile",
+      "type": "url",
+      "required": false,
+      "placeholder": "https://github.com/johndoe"
+    },
+    {
+      "key": "skills",
+      "label": "Skills",
+      "type": "array",
+      "required": true,
+      "placeholder": "JavaScript, React, Node.js..."
+    },
+    {
+      "key": "projects",
+      "label": "Projects",
+      "type": "object_array",
+      "required": false,
+      "fields": [
+        {
+          "key": "title",
+          "label": "Project Title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "description",
+          "label": "Project Description",
+          "type": "textarea",
+          "required": true
+        },
+        {
+          "key": "technologies",
+          "label": "Technologies Used",
+          "type": "array",
+          "required": true
+        },
+        {
+          "key": "url",
+          "label": "Project URL",
+          "type": "url",
+          "required": false
+        }
+      ]
+    }
+  ],
+  "colors": {
+    "primary": "#667eea",
+    "secondary": "#764ba2",
+    "accent": "#f4f4f4",
+    "text": "#333333",
+    "background": "#ffffff"
+  },
+  "fonts": {
+    "primary": "Arial, sans-serif",
+    "headings": "Arial, sans-serif"
+  }
+}
