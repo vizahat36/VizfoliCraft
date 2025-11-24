@@ -211,9 +211,10 @@ VizfoliCraft/
 
 1. **[PROGRESS.md](PROGRESS.md)** - Detailed progress tracking with completed features, pending work, and roadmap
 2. **[PROJECT_STATUS.md](PROJECT_STATUS.md)** - Quick project status summary and next steps
-3. **[Backend README](backend/viztoufolicraft/README.md)** - Backend setup, features, and configuration
-4. **[API Documentation](backend/viztoufolicraft/API_DOCUMENTATION.md)** - Complete API reference with examples
-5. **[Frontend README](frontend/portfolio-generator/README.md)** - Frontend setup and available scripts
+3. **[FRONTEND_GUIDE.md](FRONTEND_GUIDE.md)** - **NEW!** Complete frontend development guide with API integration
+4. **[Backend README](backend/viztoufolicraft/README.md)** - Backend setup, features, and configuration
+5. **[API Documentation](backend/viztoufolicraft/API_DOCUMENTATION.md)** - Complete API reference with examples
+6. **[Frontend README](frontend/portfolio-generator/README.md)** - Frontend setup and available scripts
 
 ### API Documentation Highlights
 
@@ -221,13 +222,23 @@ The backend provides **50+ REST API endpoints** including:
 
 - **Authentication**: `/api/auth/register`, `/api/auth/login`
 - **User Profiles**: `/api/users/profile/*`
+- **Portfolio (Simplified)**: `/api/portfolio/create`, `/api/portfolio/me`, `/api/portfolio/update`, `/api/portfolio/publish` **NEW!**
 - **Templates**: `/api/portfolio/templates/*`
-- **Deployment**: `/api/portfolio/deploy/*`
+- **Deployment (Advanced)**: `/api/portfolio/deploy/*`
 - **Resume**: `/api/resume/*`
 - **Gamification**: `/api/gamification/*`
 - **Admin Panel**: `/api/admin/*`
 
 See [API_DOCUMENTATION.md](backend/viztoufolicraft/API_DOCUMENTATION.md) for complete details.
+
+### Frontend Development Guide
+
+**NEW!** Check out [FRONTEND_GUIDE.md](FRONTEND_GUIDE.md) for:
+- Complete frontend roadmap and architecture
+- Page-by-page implementation guide
+- API integration examples with code snippets
+- Authentication flow with React Context
+- Step-by-step development checklist
 
 ---
 

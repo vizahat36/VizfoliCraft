@@ -171,7 +171,104 @@ Complete API documentation for VizfoliCraft Portfolio Generator Backend.
 
 ---
 
-## 🚀 Portfolio Deployment
+## 🚀 Portfolio Management (Simplified Flow)
+
+### Create Portfolio from GitHub/LinkedIn URL
+**POST** `/api/portfolio/create`
+*Requires: Authentication*
+
+Import portfolio data automatically from GitHub or LinkedIn profile.
+
+**Request:**
+```json
+{
+  "profileUrl": "https://github.com/johndoe",
+  "platform": "GITHUB"
+}
+```
+
+**Response:**
+```json
+{
+  "id": "64f8a1234567890abcdef456",
+  "displayName": "John Doe",
+  "profession": "Full Stack Developer",
+  "location": "San Francisco, CA",
+  "bio": "Passionate developer...",
+  "profileImageUrl": "https://avatars.githubusercontent.com/u/123456",
+  "website": "https://johndoe.dev",
+  "githubUrl": "https://github.com/johndoe",
+  "linkedinUrl": null,
+  "skills": "JavaScript, React, Node.js, Python"
+}
+```
+
+### Get My Portfolio
+**GET** `/api/portfolio/me`
+*Requires: Authentication*
+
+**Response:**
+```json
+{
+  "profile": {
+    "id": "64f8a1234567890abcdef456",
+    "displayName": "John Doe",
+    "bio": "Full Stack Developer",
+    "skills": "JavaScript, React, Node.js"
+  },
+  "isPublished": true,
+  "publicUrl": "https://portfolicraft.me/u/john_doe"
+}
+```
+
+### Update Portfolio
+**PUT** `/api/portfolio/update`
+*Requires: Authentication*
+
+**Request:**
+```json
+{
+  "displayName": "John Doe",
+  "bio": "Updated bio text",
+  "skills": "JavaScript, React, Node.js, Python, Docker",
+  "profession": "Senior Full Stack Developer"
+}
+```
+
+**Response:**
+```json
+{
+  "id": "64f8a1234567890abcdef456",
+  "message": "Portfolio updated successfully",
+  "profile": { ... }
+}
+```
+
+### Publish Portfolio
+**POST** `/api/portfolio/publish`
+*Requires: Authentication*
+
+**Request:**
+```json
+{
+  "isPublic": true,
+  "customCSS": ".header { background: #0066cc; }",
+  "customJS": "console.log('Portfolio loaded');"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "publicUrl": "https://portfolicraft.me/u/john_doe",
+  "message": "Portfolio published successfully"
+}
+```
+
+---
+
+## 🚀 Portfolio Deployment (Advanced)
 
 ### Deploy Portfolio
 **POST** `/api/portfolio/deploy/{templateId}`

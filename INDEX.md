@@ -15,6 +15,14 @@ Welcome! This index will help you find the right documentation for your needs.
 - Tech stack
 - Quick start guide
 
+### Ready to build the frontend?
+**Essential**: [FRONTEND_GUIDE.md](FRONTEND_GUIDE.md) **NEW!**
+- Complete frontend roadmap
+- Page-by-page implementation guide
+- API integration with code examples
+- Authentication flow setup
+- Development checklist
+
 ### Want a quick status update?
 **Go to**: [PROJECT_STATUS.md](PROJECT_STATUS.md)
 - Current completion: ~65%
@@ -106,11 +114,13 @@ Welcome! This index will help you find the right documentation for your needs.
 - 8-12 weeks to production with proper team
 
 ### For Developers (Frontend)
-1. [CONTRIBUTING.md](CONTRIBUTING.md) - Start here
-2. [TODO.md](TODO.md) - Task list (Priority 1-3)
-3. [Frontend README](frontend/portfolio-generator/README.md) - Setup
+1. **[FRONTEND_GUIDE.md](FRONTEND_GUIDE.md)** - **Start here!** Complete guide
+2. [CONTRIBUTING.md](CONTRIBUTING.md) - Development standards
+3. [TODO.md](TODO.md) - Task list (Priority 1-3)
+4. [Frontend README](frontend/portfolio-generator/README.md) - Setup
 
 **Priority Tasks**:
+- Follow FRONTEND_GUIDE.md roadmap
 - Implement authentication (Week 1-2)
 - Build user dashboard (Week 3-4)
 - Create template gallery (Week 3-4)
@@ -210,6 +220,9 @@ Welcome! This index will help you find the right documentation for your needs.
 
 **...start contributing**
 → [CONTRIBUTING.md](CONTRIBUTING.md)
+
+**...build the frontend**
+→ [FRONTEND_GUIDE.md](FRONTEND_GUIDE.md) **NEW!**
 
 **...find tasks to work on**
 → [TODO.md](TODO.md)
