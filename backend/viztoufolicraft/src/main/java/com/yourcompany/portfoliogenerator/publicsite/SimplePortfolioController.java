@@ -26,7 +26,6 @@ public class SimplePortfolioController {
     private final GitHubIntegrationService gitHubService;
     private final LinkedInIntegrationService linkedInService;
     private final UserProfileService userProfileService;
-    private final PortfolioDeploymentService portfolioDeploymentService;
 
     /**
      * Create portfolio by importing from GitHub or LinkedIn URL
@@ -55,7 +54,7 @@ public class SimplePortfolioController {
             if ("GITHUB".equalsIgnoreCase(request.getPlatform())) {
                 profileData = gitHubService.syncGitHubData(user, username).block();
             } else if ("LINKEDIN".equalsIgnoreCase(request.getPlatform())) {
-                profileData = linkedInService.syncLinkedInData(user, username).block();
+                profileData = linkedInService.syncLinkedInDataFromUrl(user, request.getProfileUrl()).block();
             } else {
                 return ResponseEntity.badRequest().body(
                     Map.of("error", "Invalid platform. Use GITHUB or LINKEDIN.")
@@ -86,7 +85,7 @@ public class SimplePortfolioController {
     @GetMapping("/me")
     public ResponseEntity<?> getMyPortfolio(@AuthenticationPrincipal User user) {
         try {
-            UserProfileResponse profile = userProfileService.getUserProfile(user);
+            UserProfileResponse profile = userProfileService.getUserProfileResponse(user);
             
             if (profile == null) {
                 return ResponseEntity.notFound().build();
@@ -147,7 +146,7 @@ public class SimplePortfolioController {
             log.info("Publishing portfolio for user {}", user.getUsername());
 
             // Get user's profile
-            UserProfileResponse profile = userProfileService.getUserProfile(user);
+            UserProfileResponse profile = userProfileService.getUserProfileResponse(user);
             
             if (profile == null) {
                 return ResponseEntity.badRequest().body(
@@ -155,17 +154,8 @@ public class SimplePortfolioController {
                 );
             }
 
-            // Create deployment request
-            PortfolioDeploymentRequest deployRequest = new PortfolioDeploymentRequest();
-            deployRequest.setSubdomain(user.getUsername());
-            deployRequest.setTitle(profile.getDisplayName() + " - Portfolio");
-            deployRequest.setDescription(profile.getBio());
-            deployRequest.setIsPublic(request.getIsPublic() != null ? request.getIsPublic() : true);
-            deployRequest.setCustomCSS(request.getCustomCSS());
-            deployRequest.setCustomJS(request.getCustomJS());
-
-            // Deploy portfolio (assuming there's a default template)
-            // You may need to add template selection logic
+            // For now, just mark as published and return success
+            // In a full implementation, this would integrate with the deployment service
             String publicUrl = "https://portfolicraft.me/u/" + user.getUsername();
 
             return ResponseEntity.ok(Map.of(

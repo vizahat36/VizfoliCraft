@@ -599,6 +599,6 @@ If you get CORS errors, the backend already has `@CrossOrigin(origins = "*")` on
 
 ---
 
-**Last Updated**: November 24, 2025  
+**Last Updated**: November 24, 2024  
 **Version**: 1.0  
 **Status**: Ready for Development
